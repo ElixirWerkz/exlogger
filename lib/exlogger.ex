@@ -113,5 +113,9 @@ defmodule ExLogger do
     end
   end
 
+  def inspect(thing) do
+    ExLogger.Inspect.to_string(thing)
+  end
+
 
 end
