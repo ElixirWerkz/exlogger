@@ -63,7 +63,7 @@ defmodule ExLogger.ErrorLoggerHandler do
                          __PID__: pid, __MODULE__: nil
         mfa ->
           ## regular supervisor
-          ExLogger.error "Supervisor ${supervisor} had child ${name} started with ${mfs} at ${pid} exit with reason ${reason} " <>
+          ExLogger.error "Supervisor ${supervisor} had child ${name} started with ${mfa} at ${pid} exit with reason ${reason} " <>
                          "in context ${context}",
                          supervisor: supervisor_name(d[:supervisor]),
                          reason: Reason[reason: d[:reason]], context: d[:errorContext], 
