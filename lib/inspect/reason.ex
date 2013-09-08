@@ -19,7 +19,7 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   end
 
   def to_string(Reason[reason: {:bad_return, {_mfa, {:EXIT, reason}}}]) do
-    to_string(reason)
+    to_string(Reason[reason: reason])
   end
 
   def to_string(Reason[reason: {:bad_return, {mfa, val}}]) do
@@ -117,6 +117,10 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
 
   def to_string(Reason[reason: {reason, [mfa|_]}]) do
     ExLogger.inspect(reason) <> " in " <> ExLogger.inspect(MFA.construct(mfa))
+  end
+
+  def to_string(Reason[reason: {:EXIT, reason}]) do
+    to_string(Reason[reason: reason])
   end
 
   def to_string(Reason[reason: reason]) do

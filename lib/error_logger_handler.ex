@@ -95,7 +95,7 @@ defmodule ExLogger.ErrorLoggerHandler do
         ExLogger.debug "Supervisor ${supervisor} started ${mfa} at ${__PID__}",
                     type: :supervisor_start,
                     supervisor: supervisor_name(details[:supervisor]), mfa: ExLogger.MFA.construct(started[:mfargs]),
-                    __MODULE__: nil, __PID__: started[:pid]
+                    __MODULE__: nil, __PID__: details[:pid]
       true ->
         ExLogger.info "PROGRESS REPORT ${report}",
                    type: :progress_report, report: details,
