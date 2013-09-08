@@ -9,7 +9,7 @@ defmodule ExLogger.App do
 
         case :application.get_env(:exlogger, :error_logger_redirect) do
           {:ok, true} ->
-            :error_logger.add_report_handler(ExLogger.ErrorLoggerHandler, [])
+            ExLogger.BackendWatcher.start(:error_logger, ExLogger.ErrorLoggerHandler, [])
             lc error_handler inlist (:gen_event.which_handlers(:error_logger) --
                                      [ExLogger.ErrorLoggerHandler]) do
               :error_logger.delete_report_handler(error_handler)

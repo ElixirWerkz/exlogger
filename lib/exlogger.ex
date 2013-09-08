@@ -8,6 +8,21 @@ defmodule ExLogger do
                      level: nil, message: nil, object: [],
                      module: nil, file: nil, line: nil, pid: nil
 
+  defrecord MFA, module: nil, function: nil, arguments: [], properties: [] do
+
+    def construct([head|_]) do
+      construct(head)
+    end
+    def construct({m, f, a, properties}) do
+      __MODULE__[module: m, function: f, arguments: a, properties: properties]
+    end
+
+    def construct({m, f, a}) do
+      __MODULE__[module: m, function: f, arguments: a]
+    end
+
+  end
+
   @levels %w(debug info notice warning error critical alert emergency)a
   def levels, do: @levels
 
