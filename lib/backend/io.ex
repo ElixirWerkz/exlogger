@@ -25,9 +25,9 @@ defmodule ExLogger.Backend.IO do
     Enum.join([
        format_timestamp(timestamp),
        format_level(level),
-       format_location(module, file, line),
        format_pid(pid),
        ExLogger.Format.format(msg, object),
+       format_location(module, file, line),
       ] |> Enum.filter(fn(x) -> not nil?(x) end), " ")
     IO.write output_file, IO.ANSI.escape("\r" <> string <> "\n\r", ansi)
     if is_pid(output_file), do: :file.datasync(output_file)
