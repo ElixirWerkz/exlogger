@@ -13,6 +13,10 @@ defimpl ExLogger.Inspect, for: ExLogger.MFA do
     "#{inspect m}.#{f}/#{a}" <> format_properties(properties)
   end
 
+  def to_string(MFA[module: m, function: f, arguments: :undefined, properties: properties]) do
+    "#{inspect m}.#{f}" <> format_properties(properties)
+  end
+
   defp format_properties(nil), do: ""
   defp format_properties(props) do
     " (#{props[:file]}:#{props[:line]})"
