@@ -6,16 +6,16 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
 
   def to_string(Reason[reason: {:"function not exported", [{m, f, a}, mfa|_]}]) do
     "call to undefined function " <> ExLogger.Inspect.to_string(MFA.construct(m, f, length(a))) <>
-    " from " <> ExLogger.Inspect.to_string(MFA.construct(mfa))
+    " from\n" <> ExLogger.Inspect.to_string(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:"function not exported", [{m, f, a, _props}, mfa|_]}]) do
     "call to undefined function " <> ExLogger.Inspect.to_string(MFA.construct(m, f, length(a))) <>
-    " from " <> ExLogger.Inspect.to_string(MFA.construct(mfa))
+    " from\n" <> ExLogger.Inspect.to_string(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:undef, [mfa|_]}]) do
-    "call to undefined function " <> ExLogger.Inspect.to_string(MFA.construct(mfa))
+    "call to undefined function\n" <> ExLogger.Inspect.to_string(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:bad_return, {_mfa, {:EXIT, reason}}}]) do
@@ -23,7 +23,7 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   end
 
   def to_string(Reason[reason: {:bad_return, {mfa, val}}]) do
-    "bad return value " <> inspect(val) <> " from " <> ExLogger.inspect(MFA.construct(mfa))
+    "bad return value " <> inspect(val) <> " from\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:bad_return_value, val}]) do
@@ -35,11 +35,11 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   end
 
   def to_string(Reason[reason: {{:bad_record, record}, [mfa|_]}]) do
-    "bad record  " <> inspect(record) <> " in " <> ExLogger.inspect(MFA.construct(mfa))
+    "bad record  " <> inspect(record) <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {{:case_clause, val}, [mfa|_]}]) do
-    "no case clause matching " <> inspect(val) <> " in " <> ExLogger.inspect(MFA.construct(mfa))
+    "no case clause matching " <> inspect(val) <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:function_clause, [mfa|_]}]) do
@@ -47,19 +47,19 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   end
 
   def to_string(Reason[reason: {:if_clause, [mfa|_]}]) do
-    "no true branch found while evaluating if expression in " <> ExLogger.inspect(MFA.construct(mfa))
+    "no true branch found while evaluating if expression in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {{:try_clause, val}, [mfa|_]}]) do
-    "no try clause matching " <> inspect val <> " in " <> ExLogger.inspect(MFA.construct(mfa))
+    "no try clause matching " <> inspect val <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:badarith, [mfa|_]}]) do
-    "bad arithmetic expression in " <> ExLogger.inspect(MFA.construct(mfa))
+    "bad arithmetic expression in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {{:badmatch, val}, [mfa|_]}]) do
-    "no match of right hand side value " <> inspect val <> " in " <> ExLogger.inspect(MFA.construct(mfa))
+    "no match of right hand side value " <> inspect val <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:emfile, _trace}]) do
@@ -87,24 +87,24 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   end
 
   def to_string(Reason[reason: {:system_limit, [mfa|_]}]) do
-    "system limit in " <> ExLogger.inspect(MFA.construct(mfa))
+    "system limit in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:badarg, [{_, _, a} = mfa, mfa2|_]}]) when is_list(a) do
-    "bad argument in call to " <> ExLogger.inspect(MFA.construct(mfa)) <> " in "  <> ExLogger.inspect(MFA.construct(mfa2))
+    "bad argument in call to " <> ExLogger.inspect(MFA.construct(mfa)) <> " in\n"  <> ExLogger.inspect(MFA.construct(mfa2))
   end
 
   def to_string(Reason[reason: {:badarg, [{_, _, a, _props} = mfa, mfa2|_]}]) when is_list(a) do
-    "bad argument in call to " <> ExLogger.inspect(MFA.construct(mfa)) <> " in "  <> ExLogger.inspect(MFA.construct(mfa2))
+    "bad argument in call to " <> ExLogger.inspect(MFA.construct(mfa)) <> " in\n"  <> ExLogger.inspect(MFA.construct(mfa2))
   end
 
   def to_string(Reason[reason: {:badarg, [mfa|_]}]) do
-    "bad argument in " <> ExLogger.inspect(MFA.construct(mfa))
+    "bad argument in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {{:badarity, {f, a}}, [mfa|_]}]) do
     arity = :erlang.fun_info(f)[:arity]
-    "function called with wrong arity of #{length(a)} instead of #{arity} in " <> ExLogger.inspect(MFA.construct(mfa))
+    "function called with wrong arity of #{length(a)} instead of #{arity} in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:noproc, mfa}]) do
@@ -112,11 +112,11 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   end
 
   def to_string(Reason[reason: {{:badfun, term}, [mfa|_]}]) do
-    "bad function " <> inspect(term) <> " in " <> ExLogger.inspect(MFA.construct(mfa))
+    "bad function " <> inspect(term) <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {reason, [mfa|_]}]) do
-    ExLogger.inspect(reason) <> " in " <> ExLogger.inspect(MFA.construct(mfa))
+    ExLogger.inspect(reason) <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:EXIT, reason}]) do
