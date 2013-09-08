@@ -13,7 +13,7 @@ defmodule ExLogger.Backend.IO do
         ansi = is_atom(file) and IO.ANSI.terminal?
       ansi ->
         :ok
-    end
+      end
     {:ok, backend_state(file: file, ansi: ansi)}
   end
 
@@ -28,7 +28,8 @@ defmodule ExLogger.Backend.IO do
        format_pid(pid),
        ExLogger.Format.format(msg, object),
        format_location(module, file, line),
-      ] |> Enum.filter(fn(x) -> not nil?(x) end), " ")
+      ] |> Enum.filter(fn(x) -> not nil?(x) end), " ") |>
+      String.replace("\n", "\n\r")
     IO.write output_file, IO.ANSI.escape("\r" <> string <> "\n\r", ansi)
     if is_pid(output_file), do: :file.datasync(output_file)
     s
