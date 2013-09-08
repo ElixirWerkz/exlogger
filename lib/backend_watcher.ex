@@ -24,10 +24,10 @@ defmodule ExLogger.BackendWatcher do
 
   def handle_info({:gen_event_EXIT, module, reason},
                   state(module: module, options: options, event: event) = s) do    
+    install_handler(event, module, options)
     ExLogger.error "ExLogger ${backend} backend exited with reason ${reason}",
                    application: :exlogger, backend: module, reason: ExLogger.ErrorLoggerHandler.Reason[reason: reason],
-                   __MODULE__: nil
-    install_handler(event, module, options)
+                   __MODULE__: nil, __PID__: nil
     {:noreply, s}
   end
 
