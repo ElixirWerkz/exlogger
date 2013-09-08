@@ -31,7 +31,7 @@ defmodule ExLogger.Backend do
         if Enum.find_index(@levels, fn(l) -> l == level end) >= Enum.find_index(@levels, fn(l) -> l == level1 end) do
           def handle_event({:log, message(level: @level) = msg}, state(state: backend_state, log_level: @level1) = s) do
             backend_state = handle_log(msg, backend_state)
-            {:ok, state(state: backend_state)}
+            {:ok, state(s, state: backend_state)}
           end
         else 
           def handle_event({:log, message(level: @level) = msg}, state(state: backend_state, log_level: @level1) = s) do
