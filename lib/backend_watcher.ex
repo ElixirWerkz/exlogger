@@ -23,7 +23,7 @@ defmodule ExLogger.BackendWatcher do
   end
 
   def handle_info({:gen_event_EXIT, module, reason},
-                  state(module: module, options: options, event: event) = s) do
+                  state(module: module, options: options, event: event) = s) do    
     ExLogger.error "ExLogger ${backend} backend exited with reason ${reason}",
                    application: :exlogger, backend: module, reason: ExLogger.ErrorLoggerHandler.Reason[reason: reason],
                    __MODULE__: nil

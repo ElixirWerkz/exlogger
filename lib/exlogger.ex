@@ -34,6 +34,14 @@ defmodule ExLogger do
     ExLogger.BackendWatcher.start(Process.whereis(ExLogger.Event), backend, [])
   end
 
+  def set_log_level(backend, level) when level in @levels do
+    :gen_event.call(Process.whereis(ExLogger.Event), backend, {:set_log_level, level}, :infinity)    
+  end
+
+  def get_log_level(backend) do
+    :gen_event.call(Process.whereis(ExLogger.Event), backend, :get_log_level, :infinity)    
+  end
+
 
   lc level inlist @levels do
     defmacro unquote(level)(msg // nil, object // []) do

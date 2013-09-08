@@ -1,9 +1,9 @@
 defmodule ExLogger.Backend.IO do
   use ExLogger.Backend
 
-  defrecordp :state, :state, file: nil, ansi: nil
+  defrecordp :backend_state, :backend_state, file: nil, ansi: nil
 
-  def init(options) do
+  def backend_init(options) do
     file = options[:file] || :stdio
     if is_binary(file) do
       file = File.open!(file, [:write])
@@ -14,13 +14,13 @@ defmodule ExLogger.Backend.IO do
       ansi ->
         :ok
     end
-    {:ok, state(file: file, ansi: ansi)}
+    {:ok, backend_state(file: file, ansi: ansi)}
   end
 
-  defp handle_log(message(timestamp: timestamp,
+  def handle_log(message(timestamp: timestamp,
                           level: level, message: msg, object: object,
                           module: module, file: file, line: line, pid: pid),
-                  state(file: output_file, ansi: ansi) = s) do
+                  backend_state(file: output_file, ansi: ansi) = s) do
     string =
     Enum.join([
        format_timestamp(timestamp),
