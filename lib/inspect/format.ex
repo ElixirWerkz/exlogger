@@ -4,7 +4,7 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Format do
   import Kernel, except: [to_string: 1]
   
   def to_string(Format[format: f, args: args]) do
-    to_binary(:io_lib.format(f, args))
+    Kernel.to_string(:io_lib.format(f, args))
   end
 
 end
