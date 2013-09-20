@@ -1,5 +1,5 @@
 defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
- 
+
   alias ExLogger.ErrorLoggerHandler.Reason
   alias ExLogger.MFA
   import Kernel, except: [to_string: 1]
@@ -59,7 +59,7 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   end
 
   def to_string(Reason[reason: {{:badmatch, val}, [mfa|_]}]) do
-    "no match of right hand side value " <> inspect val <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
+    "no match of right hand side value " <> inspect(val) <> " in\n" <> ExLogger.inspect(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:emfile, _trace}]) do
