@@ -23,7 +23,7 @@ defmodule ExLogger do
 
   end
 
-  @levels %w(debug info notice warning error critical alert emergency)a
+  @levels %w(verbose debug info notice warning error critical alert emergency)a
   def levels, do: @levels
 
   def register_backend({backend, options}) when is_atom(backend) do
@@ -93,7 +93,7 @@ defmodule ExLogger do
     default_excluded_levels = quote do
       cond do
         Enum.any?(:application.which_applications, fn({a, _, _}) -> a == :mix end) and Mix.env == :prod ->
-          %w(debug)a
+          %w(debug verbose)a
         true -> []
       end
     end

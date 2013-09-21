@@ -13,6 +13,7 @@ defmodule Logger.Mixfile do
     [mod: {ExLogger.App, []},
      env: [
        error_logger_redirect: true,
+       log_level: :debug,
        backends: [
          ExLogger.Backend.IO,
        ],

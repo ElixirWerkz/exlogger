@@ -52,6 +52,7 @@ defmodule ExLogger.Backend.IO do
   defp format_level(:info), do: "%{yellow}[info]"
   defp format_level(:notice), do: "[notice]"
   defp format_level(:debug), do: "%{green, bright}[debug]"
+  defp format_level(:verbose), do: "%{green, bright}[verbose]"
   defp format_level(level), do: "[#{level}]"
 
   defp format_location(nil, _, _), do: nil
