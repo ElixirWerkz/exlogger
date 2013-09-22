@@ -48,7 +48,7 @@ defmodule ExLogger.Backend.IO do
   defp format_level(:alert), do: "%{red, bright}[alert]"
   defp format_level(:emergency), do: "%{red, bright}[emergency]"
   defp format_level(:critical), do: "%{red, bright}[critical]"
-  defp format_level(:warning), do: "%{orange, bright}[warning]"
+  defp format_level(:warning), do: "%{yellow, bright}[warning]"
   defp format_level(:info), do: "%{yellow}[info]"
   defp format_level(:notice), do: "[notice]"
   defp format_level(:debug), do: "%{green, bright}[debug]"
