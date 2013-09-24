@@ -92,7 +92,7 @@ defmodule ExLogger.ErrorLoggerHandler do
                       type: :application_start, application: app, node: node,
                       __MODULE__: nil, __PID__: nil)
       not nil?(started = Dict.get(details, :started)) ->
-        ExLogger.debug "Supervisor ${supervisor} started ${mfa} at ${__PID__}",
+        ExLogger.info "Supervisor ${supervisor} started ${mfa} at ${__PID__}",
                     type: :supervisor_start,
                     supervisor: supervisor_name(details[:supervisor]), mfa: ExLogger.MFA.construct(started[:mfargs]),
                     __MODULE__: nil, __PID__: details[:pid]
