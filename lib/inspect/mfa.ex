@@ -5,7 +5,7 @@ defimpl ExLogger.Inspect, for: ExLogger.MFA do
   
   def to_string(MFA[module: m, function: f, arguments: a, properties: properties]) when is_list(a) do
     "#{inspect m}.#{f}" <>
-    (Inspect.Algebra.surround_many("(", a, ")", :infinity, inspect(&1, pretty: true)) |> Inspect.Algebra.pretty(:infinity)) <>
+    (Inspect.Algebra.surround_many("(", a, ")", :infinity, &inspect(&1, pretty: true)) |> Inspect.Algebra.pretty(:infinity)) <>
     format_properties(properties)
   end
 
