@@ -21,6 +21,10 @@ defmodule ExLogger do
       __MODULE__[module: m, function: f, arguments: a]
     end
 
+    def construct(nil) do
+      __MODULE__[]
+    end
+
   end
 
   @levels %w(verbose debug info notice warning error critical alert emergency)a
@@ -35,11 +39,11 @@ defmodule ExLogger do
   end
 
   def set_log_level(backend, level) when level in @levels do
-    :gen_event.call(Process.whereis(ExLogger.Event), backend, {:set_log_level, level}, :infinity)    
+    :gen_event.call(Process.whereis(ExLogger.Event), backend, {:set_log_level, level}, :infinity)
   end
 
   def get_log_level(backend) do
-    :gen_event.call(Process.whereis(ExLogger.Event), backend, :get_log_level, :infinity)    
+    :gen_event.call(Process.whereis(ExLogger.Event), backend, :get_log_level, :infinity)
   end
 
 
