@@ -16,7 +16,7 @@ defmodule ExLogger.Format do
     expand_message(rest, [a|acc], nil)
   end
   defp expand_message(<< "}", rest :: binary >>, acc, name_acc) do
-    expand_message(rest, [binary_to_atom(name_acc)|acc], nil)
+    expand_message(rest, [convert_name(name_acc)|acc], nil)
   end
   defp expand_message(<< a :: [1, binary], rest :: binary >>, acc, name_acc) do
     expand_message(rest, acc, name_acc <> a)
@@ -30,11 +30,24 @@ defmodule ExLogger.Format do
   end
   def format(message, object) do
     lc component inlist expand_message(message) do
-      if is_atom(component) do
-        ExLogger.Inspect.to_string(object[component])
-      else
-        component
+      cond do
+        is_atom(component) ->
+          ExLogger.Inspect.to_string(object[component])
+        is_list(component) ->
+          Enum.reduce(component, object, fn(path, object) ->
+            object[path]
+          end) |>
+          ExLogger.Inspect.to_string
+        true ->
+          component
       end
+    end
+  end
+
+  defp convert_name(name_acc) do
+    case String.split(name_acc,".") do
+      [name] -> binary_to_atom(name)
+      names -> (lc name inlist names, do: binary_to_atom(name))
     end
   end
 end
