@@ -54,6 +54,11 @@ defmodule ExLogger do
       else
         []
       end
+      default_attributes = unless nil?(__CALLER__.module) do
+        Module.get_attribute __CALLER__.module, :exlogger_default_attributes
+      else
+        []
+      end
       if unquote(level) in excluded_levels do
         nil
       else
@@ -68,7 +73,8 @@ defmodule ExLogger do
         quote do
           object = unquote(object)
           object = Dict.merge([__MODULE__: __MODULE__, __FILE__: __FILE__,
-                               __LINE__: __ENV__.line, __PID__: self], object)
+                               __LINE__: __ENV__.line, __PID__: self], unquote(default_attributes)) |>
+                   Dict.merge(object)
           stripped_object = Dict.delete(object, :__MODULE__) |>
                             Dict.delete(:__FILE__) |>
                             Dict.delete(:__LINE__) |>
@@ -103,6 +109,7 @@ defmodule ExLogger do
     end
     as = options[:as] || ExLogger
     excluded_levels = options[:excluded_levels] || default_excluded_levels
+    default_attributes = Macro.escape(options[:default_attributes] || [])
     prolog = quote do
       require ExLogger
       alias ExLogger, as: unquote(as)
@@ -111,6 +118,7 @@ defmodule ExLogger do
       quote do
         unquote(prolog)
         @exlogger_excluded_levels unquote(excluded_levels)
+        @exlogger_default_attributes unquote(default_attributes)
       end
     else
       prolog
