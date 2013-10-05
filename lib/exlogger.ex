@@ -118,7 +118,7 @@ defmodule ExLogger do
       quote do
         unquote(prolog)
         @exlogger_excluded_levels unquote(excluded_levels)
-        @exlogger_default_attributes unquote(default_attributes)
+        @exlogger_default_attributes (Module.get_attribute(__MODULE__, :exlogger_default_attributes, false) || []) ++ unquote(default_attributes)
       end
     else
       prolog
