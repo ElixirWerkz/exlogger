@@ -1,5 +1,5 @@
 defprotocol ExLogger.Inspect do
-  @only [BitString, Record, Tuple, Any]
+  @fallback_to_any true
 
   def to_string(thing)
 
