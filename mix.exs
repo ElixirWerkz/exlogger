@@ -4,7 +4,7 @@ defmodule Logger.Mixfile do
   def project do
     [ app: :exlogger,
       version: "0.0.1",
-      elixir: "~> 0.10.2-dev",
+      elixir: ">= 0.10.2",
       deps: deps ]
   end
 
