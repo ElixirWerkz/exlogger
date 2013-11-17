@@ -5,12 +5,12 @@ defimpl ExLogger.Inspect, for: ExLogger.ErrorLoggerHandler.Reason do
   import Kernel, except: [to_string: 1]
 
   def to_string(Reason[reason: {:"function not exported", [{m, f, a}, mfa|_]}]) do
-    "call to undefined function " <> ExLogger.Inspect.to_string(MFA.construct(m, f, length(a))) <>
+    "call to undefined function " <> ExLogger.Inspect.to_string(MFA.construct({m, f, length(a)})) <>
     " from\n" <> ExLogger.Inspect.to_string(MFA.construct(mfa))
   end
 
   def to_string(Reason[reason: {:"function not exported", [{m, f, a, _props}, mfa|_]}]) do
-    "call to undefined function " <> ExLogger.Inspect.to_string(MFA.construct(m, f, length(a))) <>
+    "call to undefined function " <> ExLogger.Inspect.to_string(MFA.construct({m, f, length(a)})) <>
     " from\n" <> ExLogger.Inspect.to_string(MFA.construct(mfa))
   end
 
