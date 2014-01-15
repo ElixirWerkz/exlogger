@@ -85,12 +85,13 @@ defmodule ExLogger do
                                      module: object[:__MODULE__],
                                      file: object[:__FILE__], line: object[:__LINE__],
                                      pid: object[:__PID__]]
-          case Process.get(ExLogger.Event) do
+          event = case Process.get(ExLogger.Event) do
             nil ->
               event = Process.whereis(ExLogger.Event)
               Process.put(ExLogger.Event, event)
+              event
             event ->
-              :ok
+              event
           end
           :gen_event.notify(event, {:log, log_msg})
         end
