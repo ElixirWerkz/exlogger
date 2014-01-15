@@ -72,7 +72,7 @@ defmodule ExLogger do
         end
         quote do
           object = unquote(object)
-          object = Dict.merge([__MODULE__: __MODULE__, __FILE__: __FILE__,
+          object = Dict.merge([__MODULE__: __MODULE__, __FILE__: __ENV__.file,
                                __LINE__: __ENV__.line, __PID__: self], unquote(default_attributes)) |>
                    Dict.merge(object)
           stripped_object = Dict.delete(object, :__MODULE__) |>
