@@ -8,12 +8,7 @@ defmodule ExLogger.Backend.IO do
     if is_binary(file) do
       file = File.open!(file, [:write])
     end
-    case options[:ansi] do
-      nil ->
-        ansi = is_atom(file) and IO.ANSI.terminal?
-      ansi ->
-        :ok
-      end
+    ansi = options[:ansi] || is_atom(file) and IO.ANSI.terminal?
     {:ok, backend_state(file: file, ansi: ansi)}
   end
 
